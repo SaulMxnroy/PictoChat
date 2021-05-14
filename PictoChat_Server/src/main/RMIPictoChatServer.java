@@ -13,11 +13,15 @@ public class RMIPictoChatServer extends UnicastRemoteObject implements ChatRoom 
     }
     
     @Override
-    public void retrieveMessage (String messageText, String userName) throws RemoteException, RemoteException{
+    public void sendMessage (String messageText, String userName) throws RemoteException, RemoteException{
     	if (messageText.isEmpty())
     		messageText = ""; 
     	else
     	System.out.println(userName + ": " + messageText);
+    }
+    @Override
+    public String getMessage(String text) throws RemoteException {
+        return "You: " + text;
     }
     
     public static void main(String[] args){
@@ -25,6 +29,7 @@ public class RMIPictoChatServer extends UnicastRemoteObject implements ChatRoom 
             Registry registro = LocateRegistry.createRegistry(7777);
             registro.rebind("RemoteServer", new RMIPictoChatServer());
             System.out.println("Welcome to the chat!");
+            
         }catch (RemoteException e){
             System.out.println(e.getMessage());
         }

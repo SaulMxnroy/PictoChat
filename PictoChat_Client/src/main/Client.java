@@ -13,6 +13,14 @@ public class Client {
     public static void main(String[] arg){
         Client client = new Client();
         client.connectServer();
+        
+    }
+    
+    public void sendMessage (String messageText, String userName) throws RemoteException, RemoteException{
+    	if (messageText.isEmpty())
+    		messageText = ""; 
+    	else
+    	System.out.println(userName + ": " + messageText);
     }
 
     private void connectServer() {
@@ -25,8 +33,10 @@ public class Client {
             System.out.print("Please, enter your name: ");
             name = input.next();
             do {
+            	
             	textBody = input.nextLine();
-                interfaz.retrieveMessage(textBody, name);	
+                interfaz.sendMessage(textBody, name);	
+                System.out.println(interfaz.getMessage(textBody));
             } while (!textBody.equals("END"));
    
         } catch (RemoteException | NotBoundException ex) {
